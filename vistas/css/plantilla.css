@@ -1,0 +1,40 @@
+/* Color verde por default */
+
+a {
+    color: #008d4c;
+}
+
+.skin-blue .main-header .navbar {
+    background-color: #00a65a;
+}
+
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+    background-color: #008d4c;
+}
+
+.skin-blue .main-header .logo {
+    background-color: #008d4c;
+    color: #fff;
+    border-bottom: 0 solid transparent;
+}
+
+.skin-blue .main-header .logo:hover {
+
+  background-color: #007a41;
+}
+
+.skin-blue .sidebar-menu > li.active > a {
+    border-left-color: #00a65a;
+}
+
+/* Color Paginacion */
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #008d4c;
+    border-color: #008d4c;
+
+}
