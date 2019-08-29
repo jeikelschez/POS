@@ -59,7 +59,7 @@
 
 				<a href="#">
 
-					<i class="fa fa-money"></i>
+					<i class="fa fa-bitcoin"></i>
 
 					<span>Ventas</span>
 
