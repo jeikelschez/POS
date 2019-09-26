@@ -2,70 +2,85 @@
 
 class ControladorCategorias{
 
-  /*=============================================
+    /*=============================================
 	CREAR CATEGORIAS
 	=============================================*/
 
-  static public function ctrCrearCategoria(){
+    static public function ctrCrearCategoria(){
 
-    if(isset($_POST["nuevaCategoria"])){
+      	if(isset($_POST["nuevaCategoria"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaCategoria"])){
+	      	if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaCategoria"])){
 
-				$tabla = "categorias";
+		        $tabla = "categorias";
+		        $item = "categoria";
+		        $valor = $_POST["nuevaCategoria"];
 
-				$datos = $_POST["nuevaCategoria"];
+		        $duplicado = ModeloCategorias::mdlMostrarCategorias($tabla, $item, $valor);
 
-				$respuesta = ModeloCategorias::mdlIngresarCategoria($tabla, $datos);
+    			if(!$duplicado){
 
-				if($respuesta == "ok"){
+			        $datos = $_POST["nuevaCategoria"];
+			        $respuesta = ModeloCategorias::mdlIngresarCategoria($tabla, $datos);
 
-					echo'<script>
+			        if($respuesta == "ok"){
 
-					swal({
-						  type: "success",
-						  title: "La categoría ha sido guardada correctamente",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-									if (result.value) {
+			            echo'<script>
 
-									window.location = "categorias";
+				            swal({
+				                type: "success",
+				                title: "La Categoría ha sido guardada correctamente",
+				                showConfirmButton: true,
+				                confirmButtonText: "Cerrar"
+				                }).then(function(result){
+				                    if (result.value) {
+				                    	window.location = "categorias";
+				                    }
+				            })
 
-									}
-								})
+			            </script>';
 
-					</script>';
+			        }
 
-				}
+		        }else{
 
+          			echo'<script>
 
-			}else{
+			          	swal({
+				            title: "Error de Datos",
+				            text: "¡Esta Categoría ya existe en la base de datos!",
+				            type: "error",
+				            confirmButtonText: "¡Cerrar!"
+				        });
 
-				echo'<script>
+			          	$("#nuevaCategoria").val("");
 
-					swal({
-						  type: "error",
-						  title: "¡La categoría no puede ir vacía o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-							if (result.value) {
+			        </script>';
 
-							window.location = "categorias";
+		        }
 
-							}
-						})
+	      	}else{
 
-			  	</script>';
+		        echo'<script>
 
-			}
+		          	swal({
+			            type: "error",
+			            title: "¡La Categoría no puede ir vacía o llevar caracteres especiales!",
+			            showConfirmButton: true,
+			            confirmButtonText: "Cerrar"
+			            }).then(function(result){
+			            if (result.value) {
+			            	window.location = "categorias";
+		                }
+			        })
+			        
+		        </script>';
 
-		}
+		    }
+    	}
+  	}
 
-  }
-
-  /*=============================================
+    /*=============================================
 	MOSTRAR CATEGORIAS
 	=============================================*/
 
@@ -79,7 +94,7 @@ class ControladorCategorias{
 
 	}
 
-  /*=============================================
+    /*=============================================
 	EDITAR CATEGORIA
 	=============================================*/
 
@@ -91,59 +106,79 @@ class ControladorCategorias{
 
 				$tabla = "categorias";
 
-				$datos = array("categoria"=>$_POST["editarCategoria"],
-							   "id"=>$_POST["idCategoria"]);
+				$item = "categoria";
+		        $valor = $_POST["editarCategoria"];
+		        $old = $_POST["editarOld"];
 
-				$respuesta = ModeloCategorias::mdlEditarCategoria($tabla, $datos);
+		        if($valor!=$old){
+		        	$duplicado = ModeloCategorias::mdlMostrarCategorias($tabla, $item, $valor);
+		        }		        
 
-				if($respuesta == "ok"){
+    			if(!$duplicado){
 
-					echo'<script>
+					$datos = array("categoria"=>$_POST["editarCategoria"],
+								   "id"=>$_POST["idCategoria"]);
 
-					swal({
-						  type: "success",
-						  title: "La categoría ha sido cambiada correctamente",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
+					$respuesta = ModeloCategorias::mdlEditarCategoria($tabla, $datos);
+
+					if($respuesta == "ok"){
+
+						echo'<script>
+
+							swal({
+								type: "success",
+								title: "La Categoría ha sido cambiada correctamente",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+								}).then(function(result){
 									if (result.value) {
-
-									window.location = "categorias";
-
+										window.location = "categorias";
 									}
-								})
+							})
 
-					</script>';
+						</script>';
 
-				}
+					}
 
+				}else{
+
+          			echo'<script>
+
+			          	swal({
+				            title: "Error de Datos",
+				            text: "¡Esta Categoría ya existe en la base de datos!",
+				            type: "error",
+				            confirmButtonText: "¡Cerrar!"
+				        });
+
+			          	$("#editarCategoria").val("");
+
+			        </script>';
+
+			    }  
 
 			}else{
 
 				echo'<script>
 
 					swal({
-						  type: "error",
-						  title: "¡La categoría no puede ir vacía o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
+						type: "error",
+						title: "¡La Categoría no puede ir vacía o llevar caracteres especiales!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
 							if (result.value) {
-
-							window.location = "categorias";
-
+								window.location = "categorias";
 							}
-						})
+					})
 
 			  	</script>';
 
 			}
-
 		}
-
 	}
 
-  /*=============================================
+    /*=============================================
 	BORRAR CATEGORIA
 	=============================================*/
 
@@ -151,7 +186,8 @@ class ControladorCategorias{
 
 		if(isset($_GET["idCategoria"])){
 
-			$tabla ="Categorias";
+			$tabla ="categorias";
+
 			$datos = $_GET["idCategoria"];
 
 			$respuesta = ModeloCategorias::mdlBorrarCategoria($tabla, $datos);
@@ -161,21 +197,35 @@ class ControladorCategorias{
 				echo'<script>
 
 					swal({
-						  type: "success",
-						  title: "La categoría ha sido borrada correctamente",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-									if (result.value) {
+						type: "success",
+						title: "La Categoría ha sido borrada correctamente",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+							if (result.value) {
+								window.location = "categorias";
+							}
+					})
 
-									window.location = "categorias";
+				</script>';
 
-									}
-								})
+			}else{
+				
+				echo'<script>
 
-					</script>';
+					swal({
+						type: "error",
+						title: "Error al borrar la Categoría, verifique que no esté asociada a una Subcategoría",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+							if (result.value) {
+								window.location = "categorias";
+							}
+					})
+
+				</script>';
 			}
 		}
-
 	}
 }
