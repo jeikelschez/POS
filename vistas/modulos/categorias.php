@@ -20,7 +20,7 @@
     <div class="box">
       
       <div class="box-header with-border">
-        <button class="btn btn-absi" data-toggle="modal" data-target="#modalAgregarCategoria" >
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarCategoria" >
           Agregar Categoría
         </button>
       </div>
@@ -91,7 +91,7 @@ MODAL AGREGAR CATEGORIA
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:rgba(255,117,179,1); color:white;">
+        <div class="modal-header" style="background: #3c8dbc; color:white;">
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
