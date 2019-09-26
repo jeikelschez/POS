@@ -1,120 +1,109 @@
 <div class="content-wrapper">
 
-    <section class="content-header">
+  <section class="content-header">
 
-      <h1>
-      Usuarios
+    <h1>Usuarios</h1>
 
-      </h1>
+    <ol class="breadcrumb">
+      <li><a href="inicio"><i class="fa fa-dashboard"></i>Inicio</a></li>
+      <li class="active">Administrar Usuarios</li>
+    </ol>
 
-      <ol class="breadcrumb">
-        <li><a href="inicio"><i class="fa fa-dashboard"></i>Inicio</a></li>
-        <li class="active">Administrar Usuarios</li>
-      </ol>
+  </section>
 
-    </section>
+  <section class="content">
 
-    <!-- Main content -->
-    <section class="content">
+    <div class="box">
+      <div class="box-header with-border">
 
-      <!-- Default box -->
-      <div class="box">
-        <div class="box-header with-border">
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario" >
 
-          <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario" >
+          Agregar Usuario
+        </button>
+      </div>
 
-            Agregar Usuario
-          </button>
-        </div>
+      <div class="box-body">
 
-        <div class="box-body">
+        <table class="table table-bordered dt-responsive tablas" width="100%">
 
-          <table class="table table-bordered dt-responsive tablas" width="100%">
+          <thead>
 
-            <thead>
+            <tr>
+              <th style="width:10px">#</th>
+              <th>Nombre</th>
+              <th>Usuario</th>
+              <th>Foto</th>
+              <th>Perfil</th>
+              <th>Estado</th>
+              <th>Ultimo Login</th>
+              <th>Acciones</th>
 
-              <tr>
-                <th style="width:10px">#</th>
-                <th>Nombre</th>
-                <th>Usuario</th>
-                <th>Foto</th>
-                <th>Perfil</th>
-                <th>Estado</th>
-                <th>Ultimo Login</th>
-                <th>Acciones</th>
+            </tr>
 
-              </tr>
+          </thead>
 
-            </thead>
+          <tbody>
 
-            <tbody>
+            <?php
 
-              <?php
+            $item = null;
+            $valor = null;
 
-              $item = null;
-              $valor = null;
+            $usuarios = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
 
-              $usuarios = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+            foreach ($usuarios as $key => $value){
 
-              foreach ($usuarios as $key => $value){
+              echo '<tr>
+                <td>'.($key+1).'</td>
+                <td>'.$value["nombre"].'</td>
+                <td>'.$value["usuario"].'</td>
+                <td><img src="'.$value["foto"].'" class="img-thumbnail" width="40px"></td>
+                <td>'.$value["perfil"].'</td>';
+                if($value["estado"] != 0){
 
-                echo '<tr>
-                  <td>'.($key+1).'</td>
-                  <td>'.$value["nombre"].'</td>
-                  <td>'.$value["usuario"].'</td>
-                  <td><img src="'.$value["foto"].'" class="img-thumbnail" width="40px"></td>
-                  <td>'.$value["perfil"].'</td>';
-                  if($value["estado"] != 0){
+                  echo '<td><button class="btn btn-success btn-xs btnActivar" idUsuario="'.$value["id"].'" estadoUsuario="0">Activado</button></td>';
 
-                    echo '<td><button class="btn btn-success btn-xs btnActivar" idUsuario="'.$value["id"].'" estadoUsuario="0">Activado</button></td>';
+                }else{
 
-                  }else{
+                  echo '<td><button class="btn btn-danger btn-xs btnActivar" idUsuario="'.$value["id"].'" estadoUsuario="1">Desactivado</button></td>';
 
-                    echo '<td><button class="btn btn-danger btn-xs btnActivar" idUsuario="'.$value["id"].'" estadoUsuario="1">Desactivado</button></td>';
+                }
 
-                  }
+                if($value["ultimo_login"] == null){
+                  echo '<td>0000-00-00 00:00:00</td>';
+                }else{
+                  echo '<td>'.$value["ultimo_login"].'</td>';
+                }
 
-                  if($value["ultimo_login"] == null){
-                    echo '<td>0000-00-00 00:00:00</td>';
-                  }else{
-                    echo '<td>'.$value["ultimo_login"].'</td>';
-                  }
+                echo '<td>
 
-                  echo '<td>
+                  <div class="btn-group">
 
-                    <div class="btn-group">
+                    <button class="btn btn-warning btnEditarUsuario" idUsuario="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fa fa-pencil"></i></button>
 
-                      <button class="btn btn-warning btnEditarUsuario" idUsuario="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'" fotoUsuario="'.$value["foto"].'" usuario="'.$value["usuario"].'"><i class="fa fa-times"></i></button>
 
-                      <button class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'" fotoUsuario="'.$value["foto"].'" usuario="'.$value["usuario"].'"><i class="fa fa-times"></i></button>
+                  </div>
 
-                    </div>
+                </td>
 
-                  </td>
+              </tr>';
+            }
 
-                </tr>';
-              }
+            ?>
 
-              ?>
+          </tbody>
 
-            </tbody>
-
-          </table>
-
-        </div>
-        <!-- /.box-body -->
+        </table>
 
       </div>
-      <!-- /.box -->
-
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+    </div>
+  </section>
+</div>
 
   <!--=====================================
-	MODAL AGREGAR USUARIO
-	======================================-->
+  MODAL AGREGAR USUARIO
+  ======================================-->
 
   <!-- Modal -->
   <div id="modalAgregarUsuario" class="modal fade" role="dialog">
@@ -126,8 +115,8 @@
         <form role="form" method="post" enctype="multipart/form-data">
 
           <!--=====================================
-        	CABEZA DEL MODAL
-        	======================================-->
+          CABEZA DEL MODAL
+          ======================================-->
 
           <div class="modal-header" style="background:#00a65a; color:white;">
 
@@ -138,8 +127,8 @@
           </div>
 
           <!--=====================================
-        	CUERPO DEL MODAL
-        	======================================-->
+          CUERPO DEL MODAL
+          ======================================-->
 
           <div class="modal-body">
 
@@ -148,6 +137,8 @@
               <!-- Entrada para el nombre -->
 
               <div class="form-group">
+
+                <label>Nombre:</label>
 
                 <div class="input-group">
 
@@ -162,6 +153,8 @@
 
               <div class="form-group">
 
+                <label>Usuario:</label>
+
                 <div class="input-group">
 
                   <span  class="input-group-addon"><i class="fa fa-key"></i></span>
@@ -174,6 +167,8 @@
               <!-- Entrada para la contraseña -->
 
               <div class="form-group">
+
+                <label>Contraseña:</label>
 
                 <div class="input-group">
 
@@ -188,6 +183,8 @@
 
               <div class="form-group">
 
+                <label>Perfil:</label>
+
                 <div class="input-group">
 
                   <span  class="input-group-addon"><i class="fa fa-users"></i></span>
@@ -196,7 +193,7 @@
 
                     <option value="">Seleccionar Perfil</option>
                     <option value="Administrador">Administrador</option>
-                    <option value="Especial">Especial</option>
+                    <option value="Gerente">Gerente</option>
                     <option value="Vendedor">Vendedor</option>
 
                   </select>
@@ -223,8 +220,8 @@
           </div>
 
           <!--=====================================
-        	PIE DEL MODAL
-        	======================================-->
+          PIE DEL MODAL
+          ======================================-->
 
           <div class="modal-footer">
 
@@ -283,6 +280,8 @@
 
               <div class="form-group">
 
+                <label>Nombre:</label>
+
                 <div class="input-group">
 
                   <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -297,6 +296,8 @@
 
                <div class="form-group">
 
+                <label>Usuario:</label>
+
                 <div class="input-group">
 
                   <span class="input-group-addon"><i class="fa fa-key"></i></span>
@@ -310,6 +311,8 @@
               <!-- ENTRADA PARA LA CONTRASEÑA -->
 
                <div class="form-group">
+
+                <label>Contraseña:</label>
 
                 <div class="input-group">
 
@@ -326,6 +329,8 @@
               <!-- ENTRADA PARA SELECCIONAR SU PERFIL -->
 
               <div class="form-group">
+
+                <label>Perfil:</label>
 
                 <div class="input-group">
 

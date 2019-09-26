@@ -13,23 +13,23 @@ $(".nuevaFoto").change(function(){
 
   		$(".nuevaFoto").val("");
 
-  		 swal({
-		      title: "Error al subir la imagen",
-		      text: "¡La imagen debe estar en formato JPG o PNG!",
-		      type: "error",
-		      confirmButtonText: "¡Cerrar!"
-		    });
+  		swal({
+		    title: "Error al subir la imagen",
+		    text: "¡La imagen debe estar en formato JPG o PNG!",
+		    type: "error",
+		    confirmButtonText: "¡Cerrar!"
+		});
 
   	}else if(imagen["size"] > 2000000){
 
   		$(".nuevaFoto").val("");
 
-  		 swal({
-		      title: "Error al subir la imagen",
-		      text: "¡La imagen no debe pesar más de 2MB!",
-		      type: "error",
-		      confirmButtonText: "¡Cerrar!"
-		    });
+  		swal({
+		    title: "Error al subir la imagen",
+		    text: "¡La imagen no debe pesar más de 2MB!",
+		    type: "error",
+		    confirmButtonText: "¡Cerrar!"
+		});
 
   	}else{
 
@@ -73,7 +73,6 @@ $(document).on("click", ".btnEditarUsuario", function(){
 			$("#editarPerfil").html(respuesta["perfil"]);
 			$("#editarPerfil").val(respuesta["perfil"]);
 			$("#fotoActual").val(respuesta["foto"]);
-
 			$("#passwordActual").val(respuesta["password"]);
 
 			if(respuesta["foto"] != ""){
@@ -102,33 +101,28 @@ $(document).on("click", ".btnActivar", function(){
 
   	$.ajax({
 
-	  url:"ajax/usuarios.ajax.php",
-	  method: "POST",
-	  data: datos,
-	  cache: false,
-      contentType: false,
-      processData: false,
-      success: function(respuesta){
+		url:"ajax/usuarios.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+	    contentType: false,
+	    processData: false,
+	    success: function(respuesta){
 
       	if(window.matchMedia("(max-width:767px)").matches){
 
-      		 swal({
+      		swal({
 		      	title: "El usuario ha sido actualizado",
 		      	type: "success",
 		      	confirmButtonText: "¡Cerrar!"
 		    	}).then(function(result) {
 
 		        	if (result.value) {
-
-		        	window.location = "usuarios";
-
-		        }
-
-		      });
-
-
-				}
-      }
+		        		window.location = "usuarios";
+		       		}
+		    	});
+			}
+      	}
 
   	})
 
@@ -176,7 +170,6 @@ $("#nuevoUsuario").change(function(){
 	    	if(respuesta){
 
 	    		$("#nuevoUsuario").parent().after('<div class="alert alert-warning">Este usuario ya existe en la base de datos</div>');
-
 	    		$("#nuevoUsuario").val("");
 
 	    	}
@@ -191,30 +184,33 @@ ELIMINAR USUARIO
 =============================================*/
 $(document).on("click", ".btnEliminarUsuario", function(){
 
-  var idUsuario = $(this).attr("idUsuario");
-  var fotoUsuario = $(this).attr("fotoUsuario");
-  var usuario = $(this).attr("usuario");
+  	var idUsuario = $(this).attr("idUsuario");
+  	var fotoUsuario = $(this).attr("fotoUsuario");
+  	var usuario = $(this).attr("usuario");
 
-  swal({
-    title: '¿Está seguro de borrar el usuario?',
-    text: "¡Si no lo está puede cancelar la accíón!",
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Si, borrar usuario!'
-  }).then(function(result){
+  	swal({
+
+	    title: '¿Está seguro de borrar el usuario?',
+	    text: "¡Si no lo está puede cancelar la accíón!",
+	    type: 'warning',
+	    showCancelButton: true,
+	    confirmButtonColor: '#3085d6',
+	      cancelButtonColor: '#d33',
+	      cancelButtonText: 'Cancelar',
+	      confirmButtonText: 'Si, borrar usuario!'
+
+  	}).then(function(result){
 
 		console.log(idUsuario);
 		console.log(fotoUsuario);
 		console.log(usuario);
-    if(result.value){
 
-      window.location = "index.php?ruta=usuarios&idUsuario="+idUsuario+"&usuario="+usuario+"&fotoUsuario="+fotoUsuario;
+	    if(result.value){
 
-    }
+	      	window.location = "index.php?ruta=usuarios&idUsuario="+idUsuario+"&usuario="+usuario+"&fotoUsuario="+fotoUsuario;
 
-  })
+	    }
+
+  	})
 
 })
