@@ -188,6 +188,19 @@ $(document).on("click", ".btnEliminarUsuario", function(){
   	var fotoUsuario = $(this).attr("fotoUsuario");
   	var usuario = $(this).attr("usuario");
 
+  	var usuarioActivo = $('#usuario').val();
+
+  	if(usuario===usuarioActivo){
+  		swal({
+	      title: "Error al Eliminar el Usuario",
+	      text: "No puede eliminar el usuario que Inicio la Sesión",
+	      type: "error",
+	      confirmButtonText: "¡Cerrar!"
+	    });
+
+	    return;
+  	}
+
   	swal({
 
 	    title: '¿Está seguro de borrar el usuario?',
