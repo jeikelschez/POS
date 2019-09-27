@@ -24,7 +24,7 @@
 
       <div class="box-header with-border">
 
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCliente">
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarCliente">
 
           Agregar cliente
 
@@ -47,9 +47,6 @@
            <th>Teléfono</th>
            <th>Dirección</th>
            <th>Fecha nacimiento</th>
-           <th>Total compras</th>
-           <th>Última compra</th>
-           <th>Ingreso al sistema</th>
            <th>Acciones</th>
 
          </tr>
@@ -83,20 +80,6 @@
                     <td>'.$value["direccion"].'</td>
 
                     <td>'.$value["fecha_nacimiento"].'</td>
-
-                    <td>'.$value["compras"].'</td>';
-
-                    if($value["ultima_compra"]=="1000-01-01 00:00:00"){
-
-                      echo '<td>0000-00-00 00:00:00</td>';
-
-                    }else{
-
-                      echo '<td>'.$value["ultima_compra"].'</td>';
-
-                    }
-
-                  echo  '<td>'.$value["fecha"].'</td>
 
                     <td>
 
@@ -144,7 +127,7 @@ MODAL AGREGAR CLIENTE
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+        <div class="modal-header" style="background:#00a65a; color:white">
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
@@ -164,6 +147,8 @@ MODAL AGREGAR CLIENTE
 
             <div class="form-group">
 
+              <label>Nombre:</label>
+
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -177,6 +162,8 @@ MODAL AGREGAR CLIENTE
             <!-- ENTRADA PARA EL DOCUMENTO ID -->
 
             <div class="form-group">
+
+              <label>Documento:</label>
 
               <div class="input-group">
 
@@ -192,6 +179,8 @@ MODAL AGREGAR CLIENTE
 
             <div class="form-group">
 
+              <label>Email:</label>
+
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
@@ -206,11 +195,13 @@ MODAL AGREGAR CLIENTE
 
             <div class="form-group">
 
+              <label>Teléfono 1:</label>
+
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-phone"></i></span>
 
-                <input type="text" class="form-control input-lg" name="nuevoTelefono" placeholder="Ingresar teléfono" data-inputmask="'mask':'(999) 999-9999'" data-mask required>
+                <input type="text" class="form-control input-lg" name="nuevoTelefono" placeholder="Ingresar teléfono" data-inputmask="'mask':'(9999) 999-9999'" data-mask required>
 
               </div>
 
@@ -219,6 +210,8 @@ MODAL AGREGAR CLIENTE
             <!-- ENTRADA PARA LA DIRECCIÓN -->
 
             <div class="form-group">
+
+              <label>Dirección:</label>
 
               <div class="input-group">
 
@@ -233,6 +226,8 @@ MODAL AGREGAR CLIENTE
              <!-- ENTRADA PARA LA FECHA DE NACIMIENTO -->
 
             <div class="form-group">
+
+              <label>Fecha de Nacimiento:</label>
 
               <div class="input-group">
 
@@ -256,7 +251,7 @@ MODAL AGREGAR CLIENTE
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar cliente</button>
+          <button type="submit" class="btn btn-success">Guardar cliente</button>
 
         </div>
 
@@ -311,6 +306,8 @@ MODAL EDITAR CLIENTE
 
             <div class="form-group">
 
+              <label>Nombre:</label>
+
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -324,6 +321,8 @@ MODAL EDITAR CLIENTE
             <!-- ENTRADA PARA EL DOCUMENTO ID -->
 
             <div class="form-group">
+
+              <label>Documento:</label>
 
               <div class="input-group">
 
@@ -339,6 +338,8 @@ MODAL EDITAR CLIENTE
 
             <div class="form-group">
 
+              <label>Email:</label>
+
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
@@ -353,11 +354,13 @@ MODAL EDITAR CLIENTE
 
             <div class="form-group">
 
+              <label>Teléfono 1:</label>
+
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-phone"></i></span>
 
-                <input type="text" class="form-control input-lg" name="editarTelefono" id="editarTelefono" data-inputmask="'mask':'(999) 999-9999'" data-mask required>
+                <input type="text" class="form-control input-lg" name="editarTelefono" id="editarTelefono" data-inputmask="'mask':'(9999) 999-9999'" data-mask required>
 
               </div>
 
@@ -366,6 +369,8 @@ MODAL EDITAR CLIENTE
             <!-- ENTRADA PARA LA DIRECCIÓN -->
 
             <div class="form-group">
+
+              <label>Dirección:</label>
 
               <div class="input-group">
 
@@ -380,6 +385,8 @@ MODAL EDITAR CLIENTE
              <!-- ENTRADA PARA LA FECHA DE NACIMIENTO -->
 
             <div class="form-group">
+
+              <label>Fecha de Nacimiento:</label>
 
               <div class="input-group">
 
