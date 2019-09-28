@@ -91,9 +91,9 @@ CREATE TABLE `productos` (
   `codigo` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `codigo_fabrica` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `nombre` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
-  `imagen` text COLLATE utf8_spanish_ci NOT NULL,
+  `imagen` text COLLATE utf8_spanish_ci,
   `stock` int(11) NOT NULL,
-  `precio_compra` float DEFAULT NULL,
+  `precio_compra` float,
   `precio_venta` float NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -161,6 +161,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`) VALUES
+(1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5aurDMenSq.ZyX4Ir6HuvUYrQzzTjGDkpG', 'Administrador', 'vistas/img/usuarios/default/anonymous.png', 1, '2019-04-02 18:24:53', '2019-04-03 00:24:53'),
 (2, 'jeimmy ', 'jrollin', '$2a$07$asxx54ahjppf45sd87a5auFL5K1.Cmt9ZheoVVuudOi5BCi10qWly', 'Administrador', 'vistas/img/usuarios/default/anonymous.png', 1, '2019-09-23 17:54:06', '2019-09-23 22:54:06'),
 (3, 'Jeikel Sanchez', 'jsanchez', '$2a$07$asxx54ahjppf45sd87a5auFL5K1.Cmt9ZheoVVuudOi5BCi10qWly', 'Administrador', 'vistas/img/usuarios/default/anonymous.png', 1, NULL, '2019-09-24 00:11:45');
 

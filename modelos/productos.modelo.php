@@ -4,11 +4,11 @@ require_once "conexion.php";
 
 class ModeloProductos{
 
-  /*=============================================
+    /*=============================================
 	MOSTRAR PRODUCTOS
 	=============================================*/
 
-	static public function mdlMostrarProductos($tabla, $item, $valor, $orden){
+	static public function mdlMostrarProductos($tabla, $item, $valor){
 
 		if($item != null){
 
@@ -22,7 +22,7 @@ class ModeloProductos{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY $orden DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
 
 			$stmt -> execute();
 
@@ -41,15 +41,16 @@ class ModeloProductos{
 	=============================================*/
 	static public function mdlIngresarProducto($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, imagen, stock, precio_compra, precio_venta) VALUES (:id_categoria, :codigo, :descripcion, :imagen, :stock, :precio_compra, :precio_venta)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, codigo_fabrica, nombre, imagen, stock, precio_compra, precio_venta) VALUES (:categoria, :codigo, :codigo_fabrica, :nombre, :imagen, :stock, :precio_compra, :precio_venta)");		
 
-		$stmt->bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_INT);
+		$stmt->bindParam(":categoria", $datos["categoria"], PDO::PARAM_INT);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
-		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo_fabrica", $datos["codigo_fabrica"], PDO::PARAM_STR);
+		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
 		$stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_STR);
-		$stmt->bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);
-		$stmt->bindParam(":precio_venta", $datos["precio_venta"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio_venta", $datos["precio_venta"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 
@@ -71,15 +72,15 @@ class ModeloProductos{
 	=============================================*/
 	static public function mdlEditarProducto($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_categoria = :id_categoria, descripcion = :descripcion, imagen = :imagen, stock = :stock, precio_compra = :precio_compra, precio_venta = :precio_venta WHERE codigo = :codigo");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET codigo_fabrica = :codigo_fabrica, nombre = :nombre, imagen = :imagen, stock = :stock, precio_compra = :precio_compra, precio_venta = :precio_venta WHERE id = :id");
 
-		$stmt->bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_INT);
-		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
-		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt->bindParam(":codigo_fabrica", $datos["codigo_fabrica"], PDO::PARAM_STR);
+		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
 		$stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_STR);
-		$stmt->bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);
-		$stmt->bindParam(":precio_venta", $datos["precio_venta"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio_venta", $datos["precio_venta"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 
@@ -126,12 +127,12 @@ class ModeloProductos{
 	ACTUALIZAR PRODUCTO
 	=============================================*/
 
-	static public function mdlActualizarProducto($tabla, $item1, $valor1, $valor){
+	static public function mdlActualizarProducto($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item1 = :$item1 WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET stock = :stock WHERE id = :id");
 
-		$stmt -> bindParam(":".$item1, $valor1, PDO::PARAM_STR);
-		$stmt -> bindParam(":id", $valor, PDO::PARAM_STR);
+		$stmt -> bindParam(":stock", $datos["stock"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_STR);
 
 		if($stmt -> execute()){
 
@@ -147,23 +148,6 @@ class ModeloProductos{
 
 		$stmt = null;
 
-	}
-
-	/*=============================================
-	MOSTRAR SUMA VENTAS
-	=============================================*/
-
-	static public function mdlMostrarSumaVentas($tabla){
-
-		$stmt = Conexion::conectar()->prepare("SELECT SUM(ventas) as total FROM $tabla");
-
-		$stmt -> execute();
-
-		return $stmt -> fetch();
-
-		$stmt -> close();
-
-		$stmt = null;
 	}
 
 }
