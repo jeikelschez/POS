@@ -67,7 +67,7 @@ class TablaProductos{
          TRAEMOS LAS ACCIONES
         =============================================*/
 
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarProducto' idProducto='".$productos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarProducto'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarProducto' idProducto='".$productos[$i]["id"]."' codigo_absi='".$productos[$i]["codigo_absi"]."' imagen_absi='".$productos[$i]["imagen_absi"]."'><i class='fa fa-times'></i></button></div>";
+        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarProducto' idProducto='".$productos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarProducto'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarProducto' idProducto='".$productos[$i]["id"]."' codigo='".$productos[$i]["codigo"]."' imagen='".$productos[$i]["imagen"]."'><i class='fa fa-times'></i></button></div>";
 
         $datosJson .='[
           "'.($i+1).'",
