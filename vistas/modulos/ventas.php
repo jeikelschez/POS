@@ -1,12 +1,10 @@
-
-
 <div class="content-wrapper">
 
   <section class="content-header">
 
     <h1>
 
-      Administrar ventas
+      Administrar Ventas
 
     </h1>
 
@@ -14,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Administrar ventas</li>
+      <li class="active">Administrar Ventas</li>
 
     </ol>
 
@@ -28,9 +26,9 @@
 
         <a href="crear-venta">
 
-          <button class="btn btn-primary">
+          <button class="btn btn-success">
 
-            Agregar venta
+            Agregar Venta
 
           </button>
 
@@ -38,117 +36,129 @@
 
         <button type="button" class="btn btn-default pull-right" id="daterange-btn">
 
-            <span>
-              <i class="fa fa-calendar"></i> Rango de fecha
-            </span>
+          <span>
+            <i class="fa fa-calendar"></i> Rango de fecha
+          </span>
 
-            <i class="fa fa-caret-down"></i>
+          <i class="fa fa-caret-down"></i>
 
-         </button>
+        </button>
 
       </div>
 
       <div class="box-body">
 
-       <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+        <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
 
-        <thead>
+          <thead>
 
-         <tr>
+            <tr>
 
-           <th style="width:10px">#</th>
-           <th>Código factura</th>
-           <th>Cliente</th>
-           <th>Vendedor</th>
-           <th>Forma de pago</th>
-           <th>Neto</th>
-           <th>Total</th>
-           <th>Fecha</th>
-           <th>Acciones</th>
+              <th style="width:10px">#</th>
+              <th>Código Factura</th>
+              <th>Cliente</th>
+              <th>Vendedor</th>
+              <th>Forma de pago</th>
+              <th>Subtotal</th>
+              <th>Total</th>
+              <th>Estatus</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
 
-         </tr>
+            </tr>
 
-        </thead>
+          </thead>
 
-        <tbody>
+          <tbody>
+
+            <?php
+
+            if(isset($_GET["fechaInicial"])){
+
+              $fechaInicial = $_GET["fechaInicial"];
+              $fechaFinal = $_GET["fechaFinal"];
+
+            }else{
+
+              $fechaInicial = null;
+              $fechaFinal = null;
+
+            }
+
+            $respuesta = ControladorVentas::ctrRangoFechasVentas($fechaInicial, $fechaFinal);
+
+            foreach ($respuesta as $key => $value) {
+
+              $itemCliente = "id";
+              $valorCliente = $value["id_cliente"];
+
+              $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
+
+              $itemUsuario = "id";
+              $valorUsuario = $value["id_vendedor"];
+
+              $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
+
+              if($value["metodo_pago"] == 1){
+
+                $metodo = "Efectivo";
+
+              }else if($value["metodo_pago"] == 2){
+
+                $metodo = "Tarjeta Crédito";
+
+              }else if($value["metodo_pago"] == 3){
+
+                $metodo = "Tarjeta Débito";
+                
+              }
+
+              if($value["estatus"] == 1){
+
+                $estatus = "Liquidada";
+
+              }else if($value["estatus"] == 2){
+
+                $estatus = "Generada";
+
+              }else{
+
+                $estatus = "Otro";
+                
+              }
+
+              echo '<tr>
+                      <td>'.($key+1).'</td>
+                      <td>'.$value["codigo"].'</td>
+                      <td>'.$respuestaCliente["nombre"].'</td>
+                      <td>'.$respuestaUsuario["nombre"].'</td>
+                      <td>'.$metodo.'</td>
+                      <td>$ '.number_format($value["subtotal"],2).'</td>
+                      <td>$ '.number_format($value["total"],2).'</td>
+                      <td>'.$estatus.'</td>
+                      <td>'.$value["fecha_transaccion"].'</td>
+                      <td>
+                        <div class="btn-group">
+                          <button class="btn btn-info btnImprimirFactura" codigoVenta="'.$value["codigo"].'"><i class="fa fa-print"></i></button>
+                          <button class="btn btn-warning btnEditarVenta" idVenta="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
+                          <button class="btn btn-danger btnEliminarVenta" idVenta="'.$value["id"].'"><i class="fa fa-times"></i></button>
+                        </div>
+                      </td>
+                    </tr>';
+            }
+
+            ?>
+
+          </tbody>
+
+        </table>
 
         <?php
 
-          if(isset($_GET["fechaInicial"])){
-
-            $fechaInicial = $_GET["fechaInicial"];
-            $fechaFinal = $_GET["fechaFinal"];
-
-          }else{
-
-            $fechaInicial = null;
-            $fechaFinal = null;
-
-          }
-
-          $respuesta = ControladorVentas::ctrRangoFechasVentas($fechaInicial, $fechaFinal);
-
-          foreach ($respuesta as $key => $value) {
-
-
-           echo '<tr>
-
-                  <td>'.($key+1).'</td>
-
-                  <td>'.$value["codigo"].'</td>';
-
-                  $itemCliente = "id";
-                  $valorCliente = $value["id_cliente"];
-
-                  $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
-
-                  echo '<td>'.$respuestaCliente["nombre"].'</td>';
-
-                  $itemUsuario = "id";
-                  $valorUsuario = $value["id_vendedor"];
-
-                  $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
-
-                  echo '<td>'.$respuestaUsuario["nombre"].'</td>
-
-                  <td>'.$value["metodo_pago"].'</td>
-
-                  <td>$ '.number_format($value["neto"],2).'</td>
-
-                  <td>$ '.number_format($value["total"],2).'</td>
-
-                  <td>'.$value["fecha"].'</td>
-
-                  <td>
-
-                    <div class="btn-group">
-
-                      <button class="btn btn-info btnImprimirFactura" codigoVenta="'.$value["codigo"].'"><i class="fa fa-print"></i></button>
-
-                      <button class="btn btn-warning btnEditarVenta" idVenta="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
-
-                      <button class="btn btn-danger btnEliminarVenta" idVenta="'.$value["id"].'"><i class="fa fa-times"></i></button>
-
-                    </div>
-
-                  </td>
-
-                </tr>';
-            }
+        $eliminarVenta = new ControladorVentas();
+        $eliminarVenta -> ctrEliminarVenta();
 
         ?>
-
-        </tbody>
-
-       </table>
-
-       <?php
-
-      $eliminarVenta = new ControladorVentas();
-      $eliminarVenta -> ctrEliminarVenta();
-
-      ?>
-
 
       </div>
 
