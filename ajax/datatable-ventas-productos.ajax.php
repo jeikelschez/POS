@@ -12,9 +12,10 @@ class TablaProductosVentas{
 
 	public function mostrarTablaProductosVentas(){
 
-    	$valor = 1;
+		$item = null;
+    	$valor = null;
 
-  		$productos = ControladorProductos::ctrMostrarProductoNoVestidos($valor);
+  		$productos = ControladorProductos::ctrMostrarProductos($item, $valor);
 
   		if(count($productos) == 0){
 
@@ -26,13 +27,13 @@ class TablaProductosVentas{
   		$datosJson = '{
 		  "data": [';
 
-		for($i = 0; $i < count($productos); $i++){
+		  for($i = 0; $i < count($productos); $i++){
 
 		  	/*=============================================
  	 		TRAEMOS LA IMAGEN
   			=============================================*/
 
-		  	$imagen = "<img src='".$productos[$i]["imagen_absi"]."' width='40px'>";
+		  	$imagen = "<img src='".$productos[$i]["imagen"]."' width='40px'>";
 
 		  	/*=============================================
  	 		STOCK
@@ -53,51 +54,33 @@ class TablaProductosVentas{
   			}
 
 		  	/*=============================================
-	         VALIDAMOS EL ESTATUS PARA ACTIVAR BOTON VENTA
-	        =============================================*/
-
-	        if($productos[$i]["stock"]>0){
-	        	$bclassventa = "btn btn-primary agregarProducto recuperarBoton1";
-	        }else{
-				$bclassventa = "btn btn-default recuperarBoton1";
-			} 
-
-			/*=============================================
-	         VALIDAMOS EL PRECIO COMPRA PARA ACTIVAR BOTON ORDEN
-	        =============================================*/
-
-			if($productos[$i]["precio_compra"]!=null && $productos[$i]["precio_compra"]!=0){
-				$bclassorden = "btn btn-success ordenarProducto recuperarBoton2";
-			}else{
-				$bclassorden = "btn btn-default recuperarBoton2";
-			}	
-
-  			/*=============================================
  	 		TRAEMOS LAS ACCIONES
   			=============================================*/
 
-		  	$botones = "<div class='btn-group'><button class='".$bclassventa."' idProducto='".$productos[$i]["id"]."'><i class='fa fa-cart-plus'></i></button><button class='".$bclassorden."' idProducto='".$productos[$i]["id"]."'><i class='fa fa-shopping-basket'></i></button></div>";
+		  	$botones =  "<div class='btn-group'><button class='btn btn-primary agregarProducto recuperarBoton' idProducto='".$productos[$i]["id"]."'>Agregar</button></div>";
 
 		  	$datosJson .='[
 			      "'.($i+1).'",
 			      "'.$imagen.'",
-			      "'.$productos[$i]["codigo_absi"].'",
+			      "'.$productos[$i]["codigo"].'",
 			      "'.$productos[$i]["nombre"].'",
 			      "'.$stock.'",
 			      "'.$botones.'"
 			    ],';
 
-		}
+		  }
 
-		$datosJson = substr($datosJson, 0, -1);
+		  $datosJson = substr($datosJson, 0, -1);
 
-		$datosJson .=   ']
+		 $datosJson .=   ']
 
-		}';
+		 }';
 
 		echo $datosJson;
 
+
 	}
+
 
 }
 

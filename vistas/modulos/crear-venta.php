@@ -4,7 +4,7 @@
 
     <h1>
 
-      Crear Venta
+      Crear venta
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Crear Venta</li>
+      <li class="active">Crear venta</li>
 
     </ol>
 
@@ -21,14 +21,14 @@
   <section class="content">
 
     <div class="row">
-
+      
       <!--=====================================
       LA TABLA DE PRODUCTOS
       ======================================-->
 
       <div class="col-lg-7 hidden-md hidden-sm hidden-xs">
 
-        <div class="box box-absi">
+        <div class="box box-success">
 
           <div class="box-header with-border">
 
@@ -38,44 +38,16 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered dt-responsive tablaVentaProductos" width="100%">
+            <table class="table table-bordered table-striped dt-responsive tablaVentaProductos" width="100%">
 
-              <thead>
+               <thead>
 
-                <tr>
-                  <th style="width: 5px">#</th>
+                 <tr>
+                  <th style="width: 10px">#</th>
                   <th>Imagen</th>
                   <th>Código</th>
-                  <th>Nombre</th>
+                  <th>Descripcion</th>
                   <th>Stock</th>
-                  <th>Acciones</th>
-                </tr>
-
-              </thead>
-
-            </table>
-
-          </div>
-
-          <div class="box-header with-border">
-
-            <h3 class="box-title">Listado de Vesidos</h3>
-
-          </div>
-
-          <div class="box-body">
-
-            <table class="table table-bordered dt-responsive tablaVentaVestidos" width="100%">
-
-              <thead>
-
-                <tr>
-                  <th style="width: 5px">#</th>
-                  <th>Imagen</th>
-                  <th>Producto</th>
-                  <th>Etiqueta</th>
-                  <th>Color</th>
-                  <th>Talla</th>
                   <th>Acciones</th>
                 </tr>
 
@@ -87,6 +59,7 @@
 
         </div>
 
+
       </div>
 
       <!--=====================================
@@ -95,7 +68,7 @@
 
       <div class="col-lg-5 col-xs-12">
 
-        <div class="box box-absi">
+        <div class="box box-success">
 
           <div class="box-header with-border"></div>
 
@@ -110,8 +83,6 @@
                 ======================================-->
 
                 <div class="form-group">
-
-                  <label>Vendedor:</label>
 
                   <div class="input-group">
 
@@ -131,8 +102,6 @@
 
                 <div class="form-group">
 
-                  <label>Código:</label>
-
                   <div class="input-group">
 
                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
@@ -146,21 +115,28 @@
 
                     if(!$ventas){
 
-                      echo '<input type="text" class="form-control" id="nuevoCodigo" name="nuevoCodigo" value="10001" readonly>';
+                      echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="10001" readonly>';
+
 
                     }else{
 
                       foreach ($ventas as $key => $value) {
 
+
+
                       }
 
                       $codigo = $value["codigo"] + 1;
 
-                      echo '<input type="text" class="form-control" id="nuevoCodigo" name="nuevoCodigo" value="'.$codigo.'" readonly>';
+
+
+                      echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="'.$codigo.'" readonly>';
+
 
                     }
 
                     ?>
+
 
                   </div>
 
@@ -172,24 +148,22 @@
 
                 <div class="form-group">
 
-                  <label>Cliente:</label>
-
                   <div class="input-group">
 
                     <span class="input-group-addon"><i class="fa fa-users"></i></span>
 
-                    <select class="form-control" id="nuevoSCliente" name="nuevoSCliente" required>
+                    <select class="form-control" id="seleccionarCliente" name="seleccionarCliente" required>
 
-                    <option value="">Seleccionar Cliente</option>
+                    <option value="">Seleccionar cliente</option>
 
                     <?php
 
                       $item = null;
                       $valor = null;
 
-                      $clientes = ControladorClientes::ctrMostrarClientes($item, $valor);
+                      $categorias = ControladorClientes::ctrMostrarClientes($item, $valor);
 
-                       foreach ($clientes as $key => $value) {
+                       foreach ($categorias as $key => $value) {
 
                          echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
 
@@ -206,296 +180,84 @@
                 </div>
 
                 <!--=====================================
-                ENTRADA DEL EVENTO
-                ======================================-->
-
-                <div class="form-group">                  
-
-                  <label>Evento:</label>
-
-                  <div class="input-group">
-
-                    <span class="input-group-addon"><i class="fa fa-users"></i></span>
-
-                    <select class="form-control" id="nuevoEvento" name="nuevoEvento">
-
-                      <option value="">Seleccionar Evento</option>
-
-                      <?php
-
-                        $item = null;
-                        $valor = null;
-
-                        $eventos = ControladorEventos::ctrMostrarEventos($item, $valor);
-
-                         foreach ($eventos as $key => $value) {
-
-                           echo '<option value="'.$value["id"].'">'.$value["evento"].'</option>';
-
-                         }
-
-                      ?>
-
-                    </select>
-
-                    <span class="input-group-addon"><button type="button" class="btn btn-info btn-xs btnInfoEvento" disabled><i class="fa fa-sticky-note"></i></button></span>
-
-                  </div>
-
-                </div>
-
-                <!--=====================================
-                ENTRADA FECHA ENTREGA
-                ======================================-->
-
-                <div class="form-group">    
-
-                  <label>Fecha Entrega:</label>
-
-                  <div class="input-group">
-
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-
-                    <input type="date" class="form-control" name="nuevaFechaEntrega" value="<?php echo date('Y-m-d'); ?>" required>
-
-                    <input type="hidden" class="form-control" name="nuevaFechaTrans" id="nuevaFechaTrans" value="<?php echo date('Y-m-d'); ?>" required>
-
-                  </div>
-
-                </div>
-
-                <!--=====================================
-                ENTRADA PARA AGREGAR Y ORDENAR PRODUCTO
+                ENTRADA PARA AGREGAR PRODUCTO
                 ======================================-->
 
                 <div class="form-group row nuevoProducto">
 
+
+
                 </div>
 
-                <input type="hidden" id="listaProductosVenta" name="listaProductosVenta">
-
-                <input type="hidden" id="listaProductosOrden" name="listaProductosOrden">
-
+                <input type="hidden" id="listaProductos" name="listaProductos">
 
                 <!--=====================================
-                BOTONES PARA AGREGAR Y ORDENAR PRODUCTO
+                BOTÓN PARA AGREGAR PRODUCTO
                 ======================================-->
 
-                <button type="button" class="btn btn-default hidden-lg btnAgregarProducto">Agregar Producto</button>
-
-                <button type="button" class="btn btn-default hidden-lg btnOrdenarProducto">Ordenar Producto</button>
-
+                <button type="button" class="btn btn-default hidden-lg btnAgregarProducto">Agregar producto</button>
 
                 <hr>
 
-                 <!--=====================================
-                ENTRADA PARA AGREGAR Y ORDENAR VESTIDOS
-                ======================================-->
-
-                <div class="form-group row nuevoVestido">
-
-                </div>
-
-                <input type="hidden" id="listaVestidosVenta" name="listaVestidosVenta">
-
-                <input type="hidden" id="listaVestidosOrden" name="listaVestidosOrden">
-
-                <input type="hidden" id="listaAjustes" name="listaAjustes">
-
-                <!--=====================================
-                BOTONES PARA AGREGAR Y ORDENAR VESTIDO
-                ======================================-->
-
-                <button type="button" class="btn btn-default hidden-lg btnAgregarVestidoVenta">Agregar Vestido</button>
-
-                <button type="button" class="btn btn-default hidden-lg btnOrdenarVestidoVenta">Ordenar Vestido</button>
-
-                <hr>
-
-                <!--=====================================
-                ENTRADA PARA AGREGAR CARGOS EXTRAS
-                ======================================-->
-
-                <div class="form-group row nuevoCargoExtra">
-
-                </div>
-
-                <input type="hidden" id="listaCargos" name="listaCargos">
-
-                <!--=====================================
-                BOTÓN PARA AGREGAR CARGOS EXTRAS
-                ======================================-->
-
-                <button type="button" class="btn btn-default btnAgregarCargos">Agregar Cargos Extras</button>
-
-                <hr>
-
-                <div class="form-group row">
-
-                  <div class="col-xs-12 col-sm-8"></div>
+                <div class="row">
 
                   <!--=====================================
-                  ENTRADA EXTRAS
+                  ENTRADA IMPUESTOS Y TOTAL
                   ======================================-->
 
-                  <div class="col-xs-12 col-sm-4">
+                  <div class="col-xs-8 pull-right">
 
-                    <label>Extras:</label>
+                    <table class="table">
 
-                    <div class="input-group">
+                      <thead>
 
-                      <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
+                        <tr>
+                          <th>Impuesto</th>
+                          <th>Total</th>
+                        </tr>
 
-                      <input type="number" class="form-control" min="0" id="nuevoCargoExtra" name="nuevoCargoExtra" value="0" required readonly>
+                      </thead>
 
-                    </div>
+                      <tbody>
 
-                  </div>
+                        <tr>
 
-                </div>
+                          <td style="width: 50%">
 
-                <div class="form-group row">
+                            <div class="input-group">
 
-                  <div class="col-xs-12 col-sm-4"></div>
+                              <input type="number" class="form-control input-lg" min="0" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" placeholder="0" required>
 
-                  <!--=====================================
-                  ENTRADA DESCUENTO PORCENTAJE
-                  ======================================-->
+                               <input type="hidden" name="nuevoPrecioImpuesto" id="nuevoPrecioImpuesto" required>
 
-                  <div class="col-xs-12 col-sm-4">
+                               <input type="hidden" name="nuevoPrecioNeto" id="nuevoPrecioNeto" required>
 
-                    <label>Descuento %:</label>
+                              <span class="input-group-addon"><i class="fa fa-percent"></i></span>
 
-                    <div class="input-group">
+                            </div>
 
-                      <input type="number" class="form-control" min="0" id="nuevoDescuentoPorc" name="nuevoDescuentoPorc" value="0" required>
+                          </td>
 
-                      <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+                           <td style="width: 50%">
 
-                    </div>
+                            <div class="input-group">
 
-                  </div>
+                              <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
 
-                  <!--=====================================
-                  ENTRADA DESCUENTO MONTO
-                  ======================================-->
+                              <input type="text" class="form-control input-lg" id="nuevoTotalVenta" name="nuevoTotalVenta" total="" placeholder="00000" readonly required>
 
-                  <div class="col-xs-12 col-sm-4">
+                              <input type="hidden" name="totalVenta" id="totalVenta">
 
-                    <label>Descuento $:</label>
 
-                    <div class="input-group">
+                            </div>
 
-                      <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
+                          </td>
 
-                      <input type="number" class="form-control" min="0" id="nuevoDescuentoMonto" name="nuevoDescuentoMonto" value="0" required>
+                        </tr>
 
-                    </div>
+                      </tbody>
 
-                  </div>                  
-
-                </div>
-
-                <div class="form-group row">
-
-                  <div class="col-xs-12 col-sm-8"></div>
-
-                  <!--=====================================
-                  ENTRADA SUBTOTAL
-                  ======================================-->
-
-                  <div class="col-xs-12 col-sm-4">
-
-                    <label>Subtotal:</label>
-
-                    <div class="input-group">
-
-                      <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
-
-                      <input type="text" class="form-control" id="nuevoSubtotal" name="nuevoSubtotal" placeholder="00000" readonly required>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="form-group row">
-
-                  <div class="col-xs-12 col-sm-8"></div>
-
-                  <!--=====================================
-                  ENTRADA IMPUESTO
-                  ======================================-->
-
-                  <div class="col-xs-12 col-sm-4">
-
-                    <?php
-
-                      //SE DEBE HACER RUTINA PARA BUSCAR PARAMETRO
-                      $impuesto = 8;
-
-                    ?>
-
-                    <label>Impuesto:</label>
-
-                    <div class="input-group">
-
-                      <input type="number" class="form-control" min="0" id="nuevoImpuesto" name="nuevoImpuesto" value="0" required readonly>
-
-                      <input type="hidden" name="nuevoValorImpuesto" id="nuevoValorImpuesto" value="<?php echo $impuesto; ?>">
-
-                      <span class="input-group-addon"><strong><?php echo $impuesto; ?></strong><i class="fa fa-percent"></i></span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="form-group row">
-
-                  <div class="col-xs-12 col-sm-8"></div>
-
-                  <!--=====================================
-                  ENTRADA ENVIO
-                  ======================================-->
-
-                  <div class="col-xs-12 col-sm-4">
-
-                    <label>Envío:</label>
-
-                    <div class="input-group">
-
-                      <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
-
-                      <input type="number" class="form-control" min="0" id="nuevoEnvio" name="nuevoEnvio" value="0" required>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="form-group row">
-
-                  <div class="col-xs-12 col-sm-8"></div>
-
-                  <!--=====================================
-                  ENTRADA TOTAL
-                  ======================================-->
-
-                  <div class="col-xs-12 col-sm-4">
-
-                    <label>Total:</label>
-
-                    <div class="input-group">
-
-                      <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
-
-                      <input type="text" class="form-control" id="nuevoTotal" name="nuevoTotal" total="" placeholder="00000" readonly required>
-
-                    </div>
+                    </table>
 
                   </div>
 
@@ -513,11 +275,11 @@
 
                      <div class="input-group">
 
-                      <select class="form-control" id="nuevoMetodoPago" name="nuevoMetodoPago">
+                      <select class="form-control" id="nuevoMetodoPago" name="nuevoMetodoPago" required>
                         <option value="">Seleccione método de pago</option>
-                        <option value="1">Efectivo</option>
-                        <option value="2">Tarjeta Crédito</option>
-                        <option value="3">Tarjeta Débito</option>
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="TC">Tarjeta Crédito</option>
+                        <option value="TD">Tarjeta Débito</option>
                       </select>
 
                     </div>
@@ -526,7 +288,7 @@
 
                   <div class="cajasMetodoPago"></div>
 
-                  <input type="hidden" id="nuevoCodTransaccion" name="nuevoCodTransaccion">
+                  <input type="hidden" id="listaMetodoPago" name="listaMetodoPago">
 
                 </div>
 
@@ -538,11 +300,7 @@
 
           <div class="box-footer">
 
-            <div class=" pull-right">
-
-              <input type="submit" class="btn btn-primary" name="btnGenerar" id="btnGenerar" value ="Generar">
-              <input type="submit" class="btn btn-absi" name="btnLiquidar" id="btnLiquidar" value ="Liquidar">
-              <input type="hidden" id="btnTipo" name="btnTipo">
+            <button type="submit" class="btn btn-success pull-right">Guardar venta</button>
 
           </div>
 
@@ -583,7 +341,7 @@ MODAL AGREGAR CLIENTE
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:rgba(255,117,179,1); color:white">
+        <div class="modal-header" style="background:#3c8dbc; color:white">
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
@@ -641,33 +399,15 @@ MODAL AGREGAR CLIENTE
 
             </div>
 
-            <!-- ENTRADA PARA EL TELÉFONO 1 -->
+            <!-- ENTRADA PARA EL TELÉFONO -->
 
             <div class="form-group">
-
-              <label>Teléfono 1:</label>
 
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-phone"></i></span>
 
-                <input type="text" class="form-control input-lg" name="nuevoTelefono1" placeholder="Ingresar teléfono 1" data-inputmask="'mask':'(99) 9999-9999'" data-mask required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL TELÉFONO 2 -->
-
-            <div class="form-group">
-
-              <label>Teléfono 2:</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-
-                <input type="text" class="form-control input-lg" name="nuevoTelefono2" placeholder="Ingresar teléfono 2" data-inputmask="'mask':'(99) 9999-9999'" data-mask>
+                <input type="text" class="form-control input-lg" name="nuevoTelefono" placeholder="Ingresar teléfono" data-inputmask="'mask':'(999) 999-9999'" data-mask required>
 
               </div>
 
@@ -713,7 +453,7 @@ MODAL AGREGAR CLIENTE
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-absi">Guardar cliente</button>
+          <button type="submit" class="btn btn-primary">Guardar cliente</button>
 
         </div>
 
@@ -725,52 +465,6 @@ MODAL AGREGAR CLIENTE
         $crearCliente -> ctrCrearCliente();
 
       ?>
-
-    </div>
-
-  </div>
-
-</div>
-
-<!--=====================================
-MODAL INFORMACION EVENTO
-======================================-->
-
-<div id="modalInfoEvento" class="modal fade" role="dialog">
-
-  <div class="modal-dialog">
-
-    <div class="modal-content">
-
-      <!--=====================================
-      CABEZA DEL MODAL
-      ======================================-->
-
-      <div class="modal-header" style="background:rgba(255,117,179,1); color:white">
-
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-        <h4 class="modal-title">Referencias Evento</h4>
-
-      </div>
-
-      <!--=====================================
-      CUERPO DEL MODAL
-      ======================================-->
-
-      <div class="modal-body">
-
-      </div>
-
-      <!--=====================================
-      PIE DEL MODAL
-      ======================================-->
-
-      <div class="modal-footer">
-
-        <button type="button" data-dismiss="modal" class="btn btn-absi">Salir</button>
-
-      </div>
 
     </div>
 
