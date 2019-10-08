@@ -46,7 +46,7 @@
                   <th style="width: 10px">#</th>
                   <th>Imagen</th>
                   <th>Código</th>
-                  <th>Descripcion</th>
+                  <th>Nombre</th>
                   <th>Stock</th>
                   <th>Acciones</th>
                 </tr>
